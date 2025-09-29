@@ -1,6 +1,9 @@
 #!/bin/bash
+"""
+This script restores Syncthing server data from a backup archive
+"""
 
-set -ex
+set -xeuo pipefail
 
 source .env
 

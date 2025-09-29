@@ -1,8 +1,10 @@
 #!/bin/bash
-# Release the new version of the service (script should be copied on remote)
-# To rollback: './release.sh rollback'
+"""
+Release the new version of the service (script should be copied on remote)
+To rollback: './release.sh rollback'
+"""
 
-set -ex
+set -xeuo pipefail
 
 BACKUP_DIR=release.old
 DEPLOY_LIST_FILE=deploy.list

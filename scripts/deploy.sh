@@ -1,5 +1,7 @@
 #!/bin/bash
-# Deploys app file from deploy.list to the target server
+"""
+Deploys app file from deploy.list to the target server
+"""
 set -xeuo pipefail
 
 source .deploy.env

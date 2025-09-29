@@ -1,6 +1,9 @@
 #!/bin/bash
+"""
+This script creates a backup archive of Syncthing server data from a Docker volume
+"""
 
-set -ex
+set -xeuo pipefail
 
 source .env
 
