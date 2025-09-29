@@ -1,0 +1,1 @@
+Simple syncthing node

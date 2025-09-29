@@ -1,0 +1,9 @@
+# Mac related files
+.DS_Store
+Thumbs.db
+.vscode
+
+# Project related artifacts
+bin
+.env
+.deploy.env
