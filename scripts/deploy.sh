@@ -25,3 +25,5 @@ while read -r item; do
       echo "warning: '$item' does not exist locally, skipping."
   fi
 done < deploy.list
+
+echo "Successfully deployed app files"

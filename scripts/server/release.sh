@@ -22,7 +22,7 @@ rollback() {
   docker compose up -d
 }
 
-if [ "$1" = "rollback" ]; then
+if [ "${1:-}" = "rollback" ]; then
   rollback
   exit 0
 fi
