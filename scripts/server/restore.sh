@@ -20,6 +20,7 @@ docker compose down
 docker run \
   -v "${SYNCTHING_VOLUME_NAME}":/data \
   -v "$(pwd)/${BACKUP_DIR}":/${BACKUP_DIR} \
+  --rm \
   busybox \
   tar -xzvf /${BACKUP_DIR}/data.tar.gz -C /data .
 
