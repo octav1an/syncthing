@@ -6,4 +6,5 @@ Thumbs.db
 # Project related artifacts
 bin
 .env
+.local.env
 .deploy.env
