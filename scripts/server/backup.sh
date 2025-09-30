@@ -1,7 +1,5 @@
 #!/bin/bash
-"""
-This script creates a backup archive of Syncthing server data from a Docker volume
-"""
+# This script creates a backup archive of Syncthing server data from a Docker volume
 
 set -xeuo pipefail
 
