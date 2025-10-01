@@ -1,26 +1,32 @@
 #!/bin/bash
 # This script restores Syncthing server data from a backup archive
+# Usage: ./restore.sh [<file>]
 
-
-set -xeuo pipefail
+set -euo pipefail
 
 source .env
 
-BACKUP_DIR=backup
+BACKUP_FILE_PATH=$1 # Absolute path to the backup file
 SYNCTHING_VOLUME_NAME="${COMPOSE_PROJECT_NAME}_${VOLUME_NAME}"
 
-if [ ! -d $BACKUP_DIR ]; then
-  echo "error: '$BACKUP_DIR' folder with backup artifacts doesn't exist"
-  exit 0
+if [ ! -e "$BACKUP_FILE_PATH" ]; then
+  echo "error: $BACKUP_FILE_PATH backup file doesn't exist"
+  exit 1
+fi
+
+# Validate the backup file
+if ! file "$BACKUP_FILE_PATH" | grep -q "gzip compressed data"; then
+  echo "error: backup file is not a compressed tar archive $(file "$BACKUP_FILE_PATH")"
+  exit 1
 fi
 
 docker compose down
 
 docker run \
   -v "${SYNCTHING_VOLUME_NAME}":/data \
-  -v "$(pwd)/${BACKUP_DIR}":/${BACKUP_DIR} \
+  -v "$(dirname "$BACKUP_FILE_PATH")":/backup \
   --rm \
   busybox \
-  tar -xzvf /${BACKUP_DIR}/data.tar.gz -C /data .
+  tar -xzvf "/backup/$(basename "$BACKUP_FILE_PATH")" -C /data .
 
 docker compose up -d
