@@ -1,7 +1,7 @@
 #!/bin/bash
 # Deploys app file from deploy.list to the target server
 
-set -xeuo pipefail
+set -euo pipefail
 
 DEPLOYMENT_TYPE=${1:-}
 
