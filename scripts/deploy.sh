@@ -3,7 +3,16 @@
 
 set -xeuo pipefail
 
-source .deploy.env
+DEPLOYMENT_TYPE=${1:-}
+
+if [ "${DEPLOYMENT_TYPE}" == "dev" ]; then
+  source .deploy.dev.env
+elif [ "${DEPLOYMENT_TYPE}" == "prod" ]; then
+  source .deploy.env
+else
+  echo "error: deployment type unset or unknown (allowed: dev or prod)"
+  exit 1
+fi
 
 : "${HOST:?HOST must be set in .deploy.env}"
 : "${USER:?USER must be set in .deploy.env}"
@@ -14,8 +23,12 @@ if [ ! -e "deploy.list" ]; then
   exit 1
 fi
 
-DEST=$USER@$HOST:services/$COMPOSE_PROJECT_NAME
+DEST_DIR=services/$COMPOSE_PROJECT_NAME
+DEST=$USER@$HOST:$DEST_DIR
 RSYNC_OPTS="-avz --progress --delete --relative"  # --delete to remove deleted files on server
+
+# Create the service folder on the target server, if it doesn't exist
+ssh $USER@$HOST 'mkdir -p $HOME/$DEST_DIR'
 
 while read -r item; do
   if [ -e "$item" ]; then

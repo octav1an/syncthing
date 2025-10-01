@@ -8,3 +8,4 @@ bin
 .env
 .local.env
 .deploy.env
+.deploy.dev.env
